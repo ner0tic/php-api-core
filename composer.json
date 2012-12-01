@@ -1,0 +1,27 @@
+{
+    "name":         "ner0tic/php-api-core",
+    "type":         "library",
+    "description":  "core elements of a REST styled api walker",
+    "keywords":     ["core", "api", "REST"],
+    "homepage":     "http://daviddurost.net",
+    "license":      "MIT",
+    "authors":      [
+        {
+            "name":     "David Durost",
+            "homepage": "http://daviddurost.net",
+            "email":  "david.durost@gmail.com"
+        }        
+    ],
+    "require":      {
+        "php":  ">=5.3.0"
+    },
+    "require-dev":  {
+    },
+    "suggest":      {
+    },
+    "autoload":     {
+        "psr-0": { "Core\\": "lib/" }
+    },
+
+    "minimum-stability": "dev"
+}
