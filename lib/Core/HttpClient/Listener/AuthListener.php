@@ -1,9 +1,9 @@
 <?php
 
-namespace Foursquare\HttpClient\Listener;
+namespace Core\HttpClient\Listener;
 
-use Foursquare\Client;
-use Foursquare\Exception\InvalidArgumentException;
+use Core\Client;
+use Core\Exception\InvalidArgumentException;
 
 use Buzz\Listener\ListenerInterface;
 use Buzz\Message\MessageInterface;

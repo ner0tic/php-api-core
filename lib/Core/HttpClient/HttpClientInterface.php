@@ -1,6 +1,6 @@
 <?php
 
-  namespace Foursquare\HttpClient;
+  namespace Core\HttpClient;
 
   interface HttpClientInterface {
     /**

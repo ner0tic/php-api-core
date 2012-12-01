@@ -1,12 +1,12 @@
 <?php
-  namespace Foursquare\HttpClient;
+  namespace Core\HttpClient;
 
   use Buzz\Browser;
   use Buzz\Client\Curl;
   use Buzz\Messge\MessageInterface;
 
-  use Foursquare\Exception\ApiLimitExceedException;
-  use Foursquare\HttpClient\Listener\AuthListener;
+  use Core\Exception\ApiLimitExceedException;
+  use Core\HttpClient\Listener\AuthListener;
 
   class HttpClient implements HttpClientInterface {
     /**
@@ -20,13 +20,14 @@
      * An array of options for feed the client instance
      */
     protected $options = array(
-      'url'         =>  'https://api.foursquare.com/:path',
-      'user_agent'  =>  'php-foursquare-api (https://github.com/ner0tic/php-foursquare-api)',
+      'url'         =>  'https://api.apigen.com/:path',
+      'user_agent'  =>  'php-api (https://github.com/ner0tic/php-api-core)',
       'http_port'   =>  443,
       'auth_method' =>  null,
       'timeout'     =>  10,
       'api_limit'   =>  5000,
-      'token'       =>  null);
+      'token'       =>  null,
+      'certificate' =>  false); //__DIR__.'/Certificates/CAfile.pem');
 
     /**
      *
@@ -68,10 +69,10 @@
       $this->browser->getClient()->setTimeout($this->options['timeout']);
       $this->browser->getClient()->setVerifyPeer(true); 
       $this->browser->getClient()->setOption('CURLOPT_SSL_VERIFYHOST', 2);
-      /**
-       * File: CAfile.pem contains a mashed certificate of googleapis.com and foursquare.com
-       */
-      $this->browser->getClient()->setOption('CURLOPT_CAINFO', __DIR__.'/Certificates/CAfile.pem');
+      
+      if($options['certificate'] && file_exists($options['certificate']))
+        $this->browser->getClient()->setOption('CURLOPT_CAINFO', $option['certificate']);
+      
     }
 
     /**
@@ -86,7 +87,7 @@
      * SetOption
      * @param type $name
      * @param type $value
-     * @return \Foursquare\HttpClient\HttpClient
+     * @return \Core\HttpClient\HttpClient
      */
     public function setOption($name, $value) {
       $this->option[$name]= $value;
