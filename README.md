@@ -1,8 +1,8 @@
-***php-api-core
+php-api-core
 =============
 core files for a REST api walker
 
-**Usage
+Usage
 =============
 How to add your api url.  Note the `:path` string at the end. This is needed
 for some api's (foursquare, github)
