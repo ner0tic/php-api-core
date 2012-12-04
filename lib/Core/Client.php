@@ -88,76 +88,76 @@ use \InvalidArgumentException as InvalidArgument;
      * @param array $requestOptions
      * @return type
      */
-      public function get($path, array $parameters = array(), $requestOptions = array()) {
-        return $this->getHttpClient()->get($path, $parameters, $requestOptions);
-      }
-  
-      /**
-       * Post
-       * @param string $path
-       * @param array $parameters
-       * @param array $requestOptions
-       * @return type
-       */
-      public function post($path, array $parameters = array(), $requestOptions = array()) {
-        return $this->getHttpClient()->post($path, $parameters, $requestOptions);
-      }
+    public function get($path, array $parameters = array(), $requestOptions = array()) {
+      return $this->getHttpClient()->get($path, $parameters, $requestOptions);
+    }
 
-      /**
-       * GetHttpClient
-       * @return Foursquare\HttpClient\HttpClient
-       */
-      public function getHttpClient() {
-        $this->_httpClient->setHeaders($this->headers);
+    /**
+     * Post
+     * @param string $path
+     * @param array $parameters
+     * @param array $requestOptions
+     * @return type
+     */
+    public function post($path, array $parameters = array(), $requestOptions = array()) {
+      return $this->getHttpClient()->post($path, $parameters, $requestOptions);
+    }
 
-        return $this->_httpClient;
-      }
+    /**
+     * GetHttpClient
+     * @return Foursquare\HttpClient\HttpClient
+     */
+    public function getHttpClient() {
+      $this->_httpClient->setHeaders($this->headers);
 
-      /**
-       * SetHttpClient
-       * @param Foursquare\HttpClient\HttpClientInterface $httpClient
-       */
-      public function setHttpClient(HttpClientInterface $httpClient) {
-        $this->_httpClient = $httpClient;
-      }
+      return $this->_httpClient;
+    }
 
-      /**
-       * Api
-       * @param string $name
-       * @return api 
-       * @throws InvalidArgument
-       */
-      public function api($name) {
-        if (!isset($this->_apis[$name])) {
-          $ns = "Api\$name";
-          if(!$api = new $ns())
-            throw new InvalidArgument();
-          
-          $this->_apis[$name] = $api;
-        }
-        return $this->_apis[$name];
-      }
+    /**
+     * SetHttpClient
+     * @param Foursquare\HttpClient\HttpClientInterface $httpClient
+     */
+    public function setHttpClient(HttpClientInterface $httpClient) {
+      $this->_httpClient = $httpClient;
+    }
 
-      /**
-       * GetRateLimit
-       * @return type
-       */
-      public function getRateLimit() {
-        return $this->get('rate_limit');
-      }
+    /**
+     * Api
+     * @param string $name
+     * @return api 
+     * @throws InvalidArgument
+     */
+    public function api($name) {
+      if (!isset($this->_apis[$name])) {
+        $ns = "Api\$name";
+        if(!$api = new $ns())
+          throw new InvalidArgument();
 
-      /**
-       * ClearHeaders
-       */
-      public function clearHeaders() {
-        $this->setHeaders(array());
+        $this->_apis[$name] = $api;
       }
+      return $this->_apis[$name];
+    }
 
-      /**
-       * 
-       * @param type $headerSetHeader
-       */
-      public function setHeaders($header) {
-        $this->_headers = $headers;
-      }
-  }
+    /**
+     * GetRateLimit
+     * @return type
+     */
+    public function getRateLimit() {
+      return $this->get('rate_limit');
+    }
+
+    /**
+     * ClearHeaders
+     */
+    public function clearHeaders() {
+      $this->setHeaders(array());
+    }
+
+    /**
+     * 
+     * @param type $headerSetHeader
+     */
+    public function setHeaders($header) {
+      $this->_headers = $headers;
+    }
+}

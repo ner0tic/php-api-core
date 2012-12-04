@@ -1,18 +1,15 @@
-php-api-core
-=============
-core files for a REST api walker
+php-foursquare-api
+==================
+
+ORM agnostic php library to access foursquare api
 
 Usage
 =============
-How to add your api url.  Note the `:path` string at the end. This is needed
-for some api's (foursquare, github)
 ```php
 use Core\Api\AbstractApi;
 
-$api = AbstractApi();
-$client = api->getClient();
-
-$client->setOption('url','http://blah.com/:path');
+$api = new AbstractApi();
+$client = $api->getClient();
 ```
 
 If you have api keys to use, mash them into a [pem](google.com) file and 
@@ -24,4 +21,19 @@ $client->setOption('certificate', $pem_file);
 Make a query
 ```php
 $result = $api->get($endpoint, $paramters, $request_options);
+```
+
+Working example:
+```php
+use Core\Api\AbstractApi();
+
+$api = new AbstractApi();
+$client = $api->getClient();
+
+$users = $client->get('users', array('last_name' => 'smith'));
+
+foreach($users as $user)
+  $user = new \Acme\UserBundle\Entity\User($user);
+
+// ... use $users as needed
 ```
