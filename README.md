@@ -20,7 +20,7 @@ $client->setOption('certificate', $pem_file);
 
 Make a query
 ```php
-$result = $api->get($endpoint, $paramters, $request_options);
+$result = $api->get($endpoint, $parameters, $request_options);
 ```
 
 Working example:
