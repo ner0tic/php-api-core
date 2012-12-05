@@ -14,24 +14,24 @@ use \InvalidArgumentException as InvalidArgument;
 {
     /**
      
-     * @global string AUTH_URL_TOKEN
+     * @var string $_authUrlToken
      */
-    const AUTH_URL_TOKEN = 'url_token';
+    private $_authUrlToken = 'url_token';
     
     /**
-     * @global string  AUTH_URL_CLIENT_ID
+     * @var string  $_authUrlClientId
      */
-    const AUTH_URL_CLIENT_ID = 'url_client_id';
+    private $_authUrlClientId = 'url_client_id';
     
     /**
-     * @global string AUTH_HTTP_PASSWORD
+     * @var string $_authHttpPassword
      */
-    const AUTH_HTTP_PASSWORD = 'http_password';
+    private $_authHttpPassword = 'http_password';
     
     /**
-     * @global string AUTH_HTTP_TOKEN
+     * @var string $_authHttpToken
      */
-    const AUTH_HTTP_TOKEN = 'http_token';
+    private $_authHttpToken = 'http_token';
 
     /**
      *
@@ -70,7 +70,7 @@ use \InvalidArgumentException as InvalidArgument;
     public function authenticate($login, $secret = null, $method = null) {
       $this->getHttpClient()->setOption('auth_method', $method);
 
-      if($method === self::AUTH_HTTP_PASSWORD || $method === self::AUTH_URL_CLIENT_ID) {
+      if($method === $this->_authHttpPassword || $method === $this->_authUrlClientId) {
         $this->getHttpClient()
              ->setOption('login', $login)
              ->setOption('password', $secret);
@@ -159,5 +159,53 @@ use \InvalidArgumentException as InvalidArgument;
      */
     public function setHeaders($header) {
       $this->_headers = $headers;
+    }
+    
+    /**
+     * Sets Http Pasword
+     * @param string $ahp Http password
+     */
+    public function setAuthHttpPassword($ahp) {
+      $this->_authHttpPassword = $ahp;
+    }
+    
+    /**
+     * Gets the Http Password
+     * @return string
+     */
+    public function getAuthHttpPassword() {
+      return $this->_authHttpPassword;
+    }
+    
+    /**
+     * 
+     * @param string $aht Http token
+     */
+    public function setAuthHttpToken($aht) {
+      $this->_authHttpToken = $aht;
+    }
+    
+    /**
+     * 
+     * @return string
+     */
+    public function getAuthHttpToken() {
+      return $this->_authHttpToken;
+    }
+    
+    /**
+     * 
+     * @param string $aci Client Id
+     */
+    public function setAuthClientId($aci) {
+      $this->_authClientId = $aci;
+    }
+    
+    /**
+     * 
+     * @param string $aut URL token
+     */
+    public function setAuthUrlToken($aut) {
+      $this->_authUrlToken = $aut;
     }
 }

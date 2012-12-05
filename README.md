@@ -1,7 +1,7 @@
 php-api-core
 ==================
 
-ORM agnostic php library to access foursquare api
+ORM agnostic php library to access REST apis
 
 Usage
 =============
