@@ -102,7 +102,7 @@
      * @param array $options
      * @return array 
      */
-    public function get($path, array $params = array(), $options = array()) {
+    public function get($path, array $parameters = array(), $options = array()) {
       if(0 < count($params))
         $path .= (false === strpos($path, '?')? '?':'&').http_build_query($params,'', '&');
       return $this->request($path, $params, 'GET', $options);
@@ -115,7 +115,7 @@
      * @param array $options
      * @return array 
      */
-    public function post($path, array $params = array(), $options = array()) {
+    public function post($path, array $parameters = array(), $options = array()) {
       return $this->request($path, $params, 'POST', $options);
     }
 
