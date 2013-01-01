@@ -35,7 +35,7 @@ use \InvalidArgumentException as InvalidArgument;
 
     /**
      *
-     * @var Foursquare\HttpClient $httpClient 
+     * @var Core\HttpClient $httpClient 
      */
     private $_httpClient = null;
 
@@ -55,7 +55,7 @@ use \InvalidArgumentException as InvalidArgument;
 
     /**
      * 
-     * @param Foursquare\HttpClient\HttpClientInterface $httpClient
+     * @param Core\HttpClient\HttpClientInterface $httpClient
      */
     public function __construct(HttpClientInterface $httpClient = null) {
         $this->_httpClient = $httpClient ?: new HttpClient();
@@ -105,7 +105,7 @@ use \InvalidArgumentException as InvalidArgument;
 
     /**
      * GetHttpClient
-     * @return Foursquare\HttpClient\HttpClient
+     * @return Core\HttpClient\HttpClient
      */
     public function getHttpClient() {
       $this->_httpClient->setHeaders($this->headers);
@@ -115,7 +115,7 @@ use \InvalidArgumentException as InvalidArgument;
 
     /**
      * SetHttpClient
-     * @param Foursquare\HttpClient\HttpClientInterface $httpClient
+     * @param Core\HttpClient\HttpClientInterface $httpClient
      */
     public function setHttpClient(HttpClientInterface $httpClient) {
       $this->_httpClient = $httpClient;
@@ -198,7 +198,11 @@ use \InvalidArgumentException as InvalidArgument;
      * @param string $aci Client Id
      */
     public function setAuthClientId($aci) {
-      $this->_authClientId = $aci;
+      $this->_authUrlClientId = $aci;
+    }
+    
+    public function getAuthClientId() {
+       return $this->_authUrlClientId;
     }
     
     /**

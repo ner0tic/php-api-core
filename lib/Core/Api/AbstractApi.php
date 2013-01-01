@@ -14,7 +14,7 @@
      * 
      * @param Core\Client $client
      */
-    public function __construct(Client $client = nul) {
+    public function __construct(Client $client = null) {
       $this->client = $client instanceof Client ? $client : new Client();
     }
 
@@ -25,7 +25,7 @@
      * @param array $requstOpts
      * @return type
      */
-    protected function get($path, $params = array(), $requstOpts = array()) {
+    protected function get($path, $params = array(), $requestOpts = array()) {
       return $this->client->get($path, $params, $requestOpts);
     }
 
