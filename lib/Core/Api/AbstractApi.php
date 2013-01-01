@@ -25,7 +25,7 @@
      * @param array $requstOpts
      * @return type
      */
-    protected function get($path, $params = array(), $requestOpts = array()) {
+    public function get($path, $params = array(), $requestOpts = array()) {
       return $this->client->get($path, $params, $requestOpts);
     }
 
@@ -36,7 +36,7 @@
      * @param array $requestOpts
      * @return type
      */
-    protected function post($path, $params = array(), $requestOpts = array()) {
+    public function post($path, $params = array(), $requestOpts = array()) {
       return $this->client->post($path, $params, $requestOpts);
     }
   }
