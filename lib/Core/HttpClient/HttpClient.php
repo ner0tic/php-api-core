@@ -73,7 +73,7 @@ class HttpClient implements HttpClientInterface
         $this->browser->getClient()->setVerifyPeer( true ); 
         $this->browser->getClient()->setOption( 'CURLOPT_SSL_VERIFYHOST', 2 );
 
-        if( $options[ 'certificate' ] && file_exists( $options[ 'certificate' ] ) )
+        if( isset( $options[ 'certificate' ] ) && file_exists( $options[ 'certificate' ] ) )
         {
             $this->browser->getClient()->setOption( 'CURLOPT_CAINFO', $option[ 'certificate' ] );
         }
