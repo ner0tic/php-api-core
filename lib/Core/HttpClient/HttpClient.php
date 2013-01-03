@@ -110,11 +110,11 @@ class HttpClient implements HttpClientInterface
      */
     public function get( $path, array $parameters = array(), array $options = array() ) 
     {
-        if( 0 < count( $params ) )
+        if( 0 < count( $parameters ) )
         {
-            $path .= ( false === strpos( $path, '?' ) ? '?':'&' ) . http_build_query( $params, '', '&' );
+            $path .= ( false === strpos( $path, '?' ) ? '?':'&' ) . http_build_query( $parameters, '', '&' );
         }
-        return $this->request( $path, $params, 'GET', $options );
+        return $this->request( $path, $parameters, 'GET', $options );
     }
 
     /**
@@ -126,7 +126,7 @@ class HttpClient implements HttpClientInterface
      */
     public function post( $path, array $parameters = array(), array $options = array() ) 
     {
-        return $this->request( $path, $params, 'POST', $options );
+        return $this->request( $path, $parameters, 'POST', $options );
     }
 
     /**
