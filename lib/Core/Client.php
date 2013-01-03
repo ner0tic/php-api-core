@@ -108,8 +108,6 @@ use \InvalidArgumentException as InvalidArgument;
      * @return Core\HttpClient\HttpClient
      */
     public function getHttpClient() {
-      $this->_httpClient->setHeaders($this->headers);
-
       return $this->_httpClient;
     }
 
