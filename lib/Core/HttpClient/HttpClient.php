@@ -21,7 +21,7 @@ class HttpClient implements HttpClientInterface
      * An array of options for feed the client instance
      */
     protected $options = array(
-      'url'         =>  'https://api.apigen.com/:path',
+      'url'         =>  '',
       'user_agent'  =>  'php-api (https://github.com/ner0tic/php-api-core)',
       'http_port'   =>  443,
       'auth_method' =>  null,
