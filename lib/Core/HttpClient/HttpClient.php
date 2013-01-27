@@ -1,12 +1,12 @@
 <?php
 namespace Core\HttpClient;
 
-use Buzz\Browser;
-use Buzz\Client\Curl;
-use Buzz\Messge\MessageInterface;
+use Buzz\Browser,
+    Buzz\Client\Curl,
+    Buzz\Messge\MessageInterface,
 
-use Core\Exception\ApiLimitExceedException;
-use Core\HttpClient\Listener\AuthListener;
+    Core\Exception\ApiLimitExceedException,
+    Core\HttpClient\Listener\AuthListener;
 
 class HttpClient implements HttpClientInterface 
 {
@@ -29,7 +29,8 @@ class HttpClient implements HttpClientInterface
       'api_limit'   =>  5000,
       'token'       =>  null,
       'certificate' =>  false
-    ); //__DIR__.'/Certificates/CAfile.pem');
+//      , __DIR__.'/Certificates/CAfile.pem' 
+    ); 
 
     /**
      *
@@ -71,11 +72,11 @@ class HttpClient implements HttpClientInterface
 
         $this->browser->getClient()->setTimeout( $this->options['timeout'] );
         $this->browser->getClient()->setVerifyPeer( true ); 
-        $this->browser->getClient()->setOption( 'CURLOPT_SSL_VERIFYHOST', 2 );
+        $this->browser->getClient()->setOption( CURLOPT_SSL_VERIFYHOST, 2 );
 
         if( isset( $options[ 'certificate' ] ) && file_exists( $options[ 'certificate' ] ) )
         {
-            $this->browser->getClient()->setOption( 'CURLOPT_CAINFO', $option[ 'certificate' ] );
+            $this->browser->getClient()->setOption( CURLOPT_CAINFO, $option[ 'certificate' ] );
         }
     }
 
@@ -96,7 +97,7 @@ class HttpClient implements HttpClientInterface
      */
     public function setOption( $name, $value ) 
     {
-        $this->option[$name]= $value;
+        $this->option[$name] = $value;
 
         return $this;
     }
@@ -156,7 +157,7 @@ class HttpClient implements HttpClientInterface
      */
     private function doRequest( $path, array $params = array(), $httpMethod = 'GET', $options = array() ) 
     {
-        $response = $this->browser->call( $path, $httpMethod, $this->headers,json_encode( $params ) );
+        $response = $this->browser->call( $path, $httpMethod, $this->headers, json_encode( $params ) );
         $this->checkApiLimit( $response );
 
         return array(
