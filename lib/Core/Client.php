@@ -1,11 +1,11 @@
 <?php
 namespace Core;
 
-use Core\Api\ApiInterface;
-use Core\HttpClient\HttpClientInterface;
-use Core\HttpClient\HttpClient;
-  
-use \InvalidArgumentException as InvalidArgument;
+use Core\Api\ApiInterface,
+    Core\HttpClient\HttpClientInterface,
+    Core\HttpClient\HttpClient,
+
+    \InvalidArgumentException as InvalidArgument;
 
 /**
  * class Client instance of HttpClient
@@ -16,28 +16,28 @@ use \InvalidArgumentException as InvalidArgument;
      
      * @var string $_authUrlToken
      */
-    private $_authUrlToken = 'url_token';
+    private $_authUrlToken      = 'url_token';
     
     /**
      * @var string  $_authUrlClientId
      */
-    private $_authUrlClientId = 'url_client_id';
+    private $_authUrlClientId   = 'url_client_id';
     
     /**
      * @var string $_authHttpPassword
      */
-    private $_authHttpPassword = 'http_password';
+    private $_authHttpPassword  = 'http_password';
     
     /**
      * @var string $_authHttpToken
      */
-    private $_authHttpToken = 'http_token';
+    private $_authHttpToken     = 'http_token';
 
     /**
      *
      * @var Core\HttpClient $httpClient 
      */
-    private $_httpClient = null;
+    private $_httpClient        = null;
 
     /**
      *
@@ -45,19 +45,20 @@ use \InvalidArgumentException as InvalidArgument;
      * An array of the available endpoint apis to load.  
      * Think of it like a smarter lazy loader but not that smart...
      */
-    private $_apis = array();
+    private $_apis              = array();
 
     /**
      *
      * @var array $headers 
      */
-    private $_headers = array();
+    private $_headers           = array();
 
     /**
      * 
      * @param Core\HttpClient\HttpClientInterface $httpClient
      */
-    public function __construct(HttpClientInterface $httpClient = null) {
+    public function __construct( HttpClientInterface $httpClient = null ) 
+    {
         $this->_httpClient = $httpClient ?: new HttpClient();
     }
       
@@ -67,18 +68,20 @@ use \InvalidArgumentException as InvalidArgument;
      * @param string $secret client secret
      * @param string $method call method
      */
-    public function authenticate($login, $secret = null, $method = null) {
-      $this->getHttpClient()->setOption('auth_method', $method);
+    public function authenticate( $login, $secret = null, $method = null ) 
+    {
+        $this->getHttpClient()->setOption( 'auth_method', $method );
 
-      if($method === $this->_authHttpPassword || $method === $this->_authUrlClientId) {
-        $this->getHttpClient()
-             ->setOption('login', $login)
-             ->setOption('password', $secret);
-      } 
-      else 
-        $this->getHttpClient()->setOption('token', $secret);
+        if( $method === $this->_authHttpPassword || $method === $this->_authUrlClientId ) 
+        {
+            $this->getHttpClient()
+                 ->setOption( 'login', $login )
+                 ->setOption( 'password', $secret );
+        } 
+        else 
+            $this->getHttpClient()->setOption( 'token', $secret );
 
-      $this->getHttpClient()->authenticate();
+        $this->getHttpClient()->authenticate();
     }
 
     /**
@@ -88,8 +91,9 @@ use \InvalidArgumentException as InvalidArgument;
      * @param array $requestOptions
      * @return type
      */
-    public function get($path, array $parameters = array(), $requestOptions = array()) {
-      return $this->getHttpClient()->get($path, $parameters, $requestOptions);
+    public function get( $path, array $parameters = array(), $requestOptions = array() ) 
+    {
+        return $this->getHttpClient()->get( $path, $parameters, $requestOptions );
     }
 
     /**
@@ -99,24 +103,26 @@ use \InvalidArgumentException as InvalidArgument;
      * @param array $requestOptions
      * @return type
      */
-    public function post($path, array $parameters = array(), $requestOptions = array()) {
-      return $this->getHttpClient()->post($path, $parameters, $requestOptions);
+    public function post( $path, array $parameters = array(), $requestOptions = array() ) 
+    {
+      return $this->getHttpClient()->post( $path, $parameters, $requestOptions );
     }
 
     /**
      * GetHttpClient
      * @return Core\HttpClient\HttpClient
      */
-    public function getHttpClient() {
-      return $this->_httpClient;
+    public function getHttpClient() 
+    {
+        return $this->_httpClient;
     }
 
     /**
      * SetHttpClient
      * @param Core\HttpClient\HttpClientInterface $httpClient
      */
-    public function setHttpClient(HttpClientInterface $httpClient) {
-      $this->_httpClient = $httpClient;
+    public function setHttpClient( HttpClientInterface $httpClient ) {
+        $this->_httpClient = $httpClient;
     }
 
     /**
@@ -125,89 +131,106 @@ use \InvalidArgumentException as InvalidArgument;
      * @return api 
      * @throws InvalidArgument
      */
-    public function api($name) {
-      if (!isset($this->_apis[$name])) {
-        $ns = "Api\$name";
-        if(!$api = new $ns())
-          throw new InvalidArgument();
+    public function api( $name ) {
+        if( !isset( $this->_apis[ $name ] ) ) 
+        {
+            $ns = "Api\$name";
+            if( !$api = new $ns() )
+                throw new InvalidArgument();
 
-        $this->_apis[$name] = $api;
-      }
-      return $this->_apis[$name];
+            $this->_apis[ $name ] = $api;
+        }
+        
+        return $this->_apis[ $name ];
     }
 
     /**
      * GetRateLimit
      * @return type
      */
-    public function getRateLimit() {
-      return $this->get('rate_limit');
+    public function getRateLimit() 
+    {
+        return $this->get( 'rate_limit' );
     }
 
     /**
      * ClearHeaders
      */
-    public function clearHeaders() {
-      $this->setHeaders(array());
+    public function clearHeaders() 
+    {
+        $this->setHeaders( array() );
     }
 
     /**
      * 
      * @param type $headerSetHeader
      */
-    public function setHeaders($header) {
-      $this->_headers = $headers;
+    public function setHeaders( $header ) 
+    {
+        $this->_headers = $headers;
     }
     
     /**
      * Sets Http Pasword
      * @param string $ahp Http password
      */
-    public function setAuthHttpPassword($ahp) {
-      $this->_authHttpPassword = $ahp;
+    public function setAuthHttpPassword( $ahp )
+    {
+        $this->_authHttpPassword = $ahp;
     }
     
     /**
      * Gets the Http Password
      * @return string
      */
-    public function getAuthHttpPassword() {
-      return $this->_authHttpPassword;
+    public function getAuthHttpPassword() 
+    {
+        return $this->_authHttpPassword;
     }
     
     /**
      * 
      * @param string $aht Http token
      */
-    public function setAuthHttpToken($aht) {
-      $this->_authHttpToken = $aht;
+    public function setAuthHttpToken( $aht ) 
+    {
+        $this->_authHttpToken = $aht;
     }
     
     /**
      * 
      * @return string
      */
-    public function getAuthHttpToken() {
-      return $this->_authHttpToken;
+    public function getAuthHttpToken() 
+    {
+        return $this->_authHttpToken;
     }
     
     /**
      * 
      * @param string $aci Client Id
      */
-    public function setAuthClientId($aci) {
-      $this->_authUrlClientId = $aci;
+    public function setAuthClientId( $aci ) 
+    {
+        $this->_authUrlClientId = $aci;
     }
     
-    public function getAuthClientId() {
-       return $this->_authUrlClientId;
+    public function getAuthClientId() 
+    {
+        return $this->_authUrlClientId;
     }
     
     /**
      * 
      * @param string $aut URL token
      */
-    public function setAuthUrlToken($aut) {
-      $this->_authUrlToken = $aut;
+    public function setAuthUrlToken( $aut ) 
+    {
+        $this->_authUrlToken = $aut;
+    }
+    
+    public function setOption( $name, $value )
+    {
+        return $this->_httpClient->setOption( $name, $value );
     }
 }
