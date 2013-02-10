@@ -233,4 +233,14 @@ use Core\Api\ApiInterface,
     {
         return $this->_httpClient->setOption( $name, $value );
     }
+    
+    public function setUrl( $url )
+    {
+        return $this->_httpClient->setOption( 'url', $url );
+    }
+    
+    public function getUrl()
+    {
+        return $this->_httpClient->getOption( 'url' );
+    }
 }
