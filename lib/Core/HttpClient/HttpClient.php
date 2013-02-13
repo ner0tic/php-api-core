@@ -97,7 +97,7 @@ class HttpClient implements HttpClientInterface
      */
     public function setOption( $name, $value ) 
     {
-        $this->option[$name] = $value;
+        $this->options[ $name ] = $value;
 
         return $this;
     }
