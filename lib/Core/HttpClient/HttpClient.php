@@ -143,7 +143,7 @@ class HttpClient implements HttpClientInterface
         $options = array_merge( $this->options, $options );
         $url = strtr( $options[ 'url' ], array( ':path' => trim( $path, '/' ) ) );
         
-        var_dump($url);
+        var_dump($options['url']);
         die('---');
         
         $this->lastResponse = $this->doRequest( $url, $params, $httpMethod, $options );
