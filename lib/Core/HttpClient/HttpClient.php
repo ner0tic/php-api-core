@@ -3,7 +3,7 @@ namespace Core\HttpClient;
 
 use Buzz\Browser,
     Buzz\Client\Curl,
-    Buzz\Messge\MessageInterface,
+    Buzz\Messge\Response,
 
     Core\Exception\ApiLimitExceedException,
     Core\HttpClient\Listener\AuthListener;
@@ -190,7 +190,7 @@ class HttpClient implements HttpClientInterface
      * @param \Buzz\Messge\MessageInterface $response
      * @throws ApiLimitExceedException
      */
-    protected function checkApiLimit( MessageInterface $response ) 
+    protected function checkApiLimit( Response $response ) 
     {
         $this->remainingCalls = $response->getHeader( 'X-RateLimit-Remaining' );
       
