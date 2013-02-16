@@ -121,10 +121,22 @@ class HttpClient implements HttpClientInterface
      */
     public function get( $path, array $parameters = array(), array $options = array() ) 
     {
+        if( in_array( 'access_token', $options ) )
+        {
+            $parameters[ 'access_token' ] = $options[ 'access_token' ];
+            unset( $options[ 'access_token' ] );
+        }
+        elseif( in_array( 'auth_token', $options[ 'auth_token' ] ) )
+        {
+            $parameters[ 'auth_token' ] = $options[ 'auth_token' ];
+            unset( $options[ 'auth_token' ] );
+        }
+        
         if( 0 < count( $parameters ) )
         {
             $path .= ( false === strpos( $path, '?' ) ? '?':'&' ) . http_build_query( $parameters, '', '&' );
         }
+        
         return $this->request( $path, $parameters, 'GET', $options );
     }
 
