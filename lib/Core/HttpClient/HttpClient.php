@@ -179,7 +179,7 @@ class HttpClient implements HttpClientInterface
         $content = json_decode( $response, true );
         if( JSON_ERROR_NONE !== json_last_error() )
         {
-            return $reponse;
+            return $response;
         }
       
         return $content;
