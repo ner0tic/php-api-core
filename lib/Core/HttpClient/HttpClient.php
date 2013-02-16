@@ -88,6 +88,16 @@ class HttpClient implements HttpClientInterface
     {
         $this->headers = $headers;
     }
+    
+    /**
+     * GetOption
+     * @param string $name
+     * @return string|integer|array
+     */
+    public function getOption( $name )
+    {
+        return $this->$options[ $name ];
+    }
 
     /**
      * SetOption
