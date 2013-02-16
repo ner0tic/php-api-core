@@ -126,7 +126,7 @@ class HttpClient implements HttpClientInterface
             $parameters[ 'access_token' ] = $options[ 'access_token' ];
             unset( $options[ 'access_token' ] );
         }
-        elseif( in_array( 'auth_token', $options[ 'auth_token' ] ) )
+        elseif( in_array( 'auth_token', $options ) )
         {
             $parameters[ 'auth_token' ] = $options[ 'auth_token' ];
             unset( $options[ 'auth_token' ] );
