@@ -96,7 +96,7 @@ class HttpClient implements HttpClientInterface
      */
     public function getOption( $name )
     {
-        return $this->$options[ $name ];
+        return $this->options[ $name ];
     }
 
     /**
