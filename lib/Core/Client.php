@@ -93,6 +93,8 @@ use Core\Api\ApiInterface,
      */
     public function get( $path, array $parameters = array(), $requestOptions = array() ) 
     {
+        var_dump($this->getUrl());
+        die('---');
         return $this->getHttpClient()->get( $path, $parameters, $requestOptions );
     }
 
