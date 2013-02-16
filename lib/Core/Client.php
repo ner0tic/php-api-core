@@ -80,8 +80,11 @@ use Core\Api\ApiInterface,
         } 
         else 
             $this->getHttpClient()->setOption( 'acess_token', $secret );
-
-        $this->getHttpClient()->authenticate();
+    }
+    
+    public function deauthenticate()
+    {
+        $this->authenticate( null, null, null );
     }
 
     /**
