@@ -67,7 +67,7 @@ use Core\Api\ApiInterface,
     {
         $this->getHttpClient()->setOption( 'auth_method', $method );
 
-        if( $method === AUTH_HTTP_PASSWORD || $method === AUTH_URL_CLIENT_ID ) 
+        if( $method === self::AUTH_HTTP_PASSWORD || $method === self::AUTH_URL_CLIENT_ID ) 
         {
             $this->getHttpClient()
                  ->setOption( 'login', $login )
