@@ -67,7 +67,7 @@ use Core\Api\ApiInterface,
     {
         $this->getHttpClient()->setOption( 'auth_method', $method );
 
-        if( $method === AUTH_HTTP_PASWORD || $method === AUTH_URL_CLIENT_ID ) 
+        if( $method === AUTH_HTTP_PASSWORD || $method === AUTH_URL_CLIENT_ID ) 
         {
             $this->getHttpClient()
                  ->setOption( 'login', $login )
@@ -169,7 +169,7 @@ use Core\Api\ApiInterface,
     }
     
     /**
-     * Sets Http Pasword
+     * Sets Http Password
      * @param string $ahp Http password
      */
     public function setAuthHttpPassword( $ahp )
