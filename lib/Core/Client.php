@@ -16,28 +16,28 @@ use Core\Api\ApiInterface,
      
      * @var string $_authUrlToken
      */
-    private $_authUrlToken      = 'url_token';
+    const AUTH_URL_TOKEN        = 'url_token';
     
     /**
      * @var string  $_authUrlClientId
      */
-    private $_authUrlClientId   = 'url_client_id';
+    const AUTH_URL_CLIENT_ID    = 'url_client_id';
     
     /**
      * @var string $_authHttpPassword
      */
-    private $_authHttpPassword  = 'http_password';
+    const AUTH_HTTP_PASSWORD    = 'http_password';
     
     /**
      * @var string $_authHttpToken
      */
-    private $_authHttpToken     = 'http_token';
+    const AUTH_HTTP_TOKEN       = 'http_token';
 
     /**
      *
      * @var Core\HttpClient $httpClient 
      */
-    private $_httpClient        = null;
+    protected $httpClient        = null;
 
     /**
      *
@@ -59,7 +59,7 @@ use Core\Api\ApiInterface,
      */
     public function __construct( HttpClientInterface $httpClient = null ) 
     {
-        $this->_httpClient = $httpClient ?: new HttpClient();
+        $this->httpClient = $httpClient ?: new HttpClient();
     }
       
     /**
@@ -117,7 +117,7 @@ use Core\Api\ApiInterface,
      */
     public function getHttpClient() 
     {
-        return $this->_httpClient;
+        return $this->httpClient;
     }
 
     /**
@@ -125,7 +125,7 @@ use Core\Api\ApiInterface,
      * @param Core\HttpClient\HttpClientInterface $httpClient
      */
     public function setHttpClient( HttpClientInterface $httpClient ) {
-        $this->_httpClient = $httpClient;
+        $this->httpClient = $httpClient;
     }
 
     /**
@@ -234,16 +234,16 @@ use Core\Api\ApiInterface,
     
     public function setOption( $name, $value )
     {
-        return $this->_httpClient->setOption( $name, $value );
+        return $this->httpClient->setOption( $name, $value );
     }
     
     public function setUrl( $url )
     {
-        return $this->_httpClient->setOption( 'url', $url );
+        return $this->httpClient->setOption( 'url', $url );
     }
     
     public function getUrl()
     {
-        return $this->_httpClient->getOption( 'url' );
+        return $this->httpClient->getOption( 'url' );
     }
 }

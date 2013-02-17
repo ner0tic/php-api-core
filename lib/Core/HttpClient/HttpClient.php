@@ -21,15 +21,16 @@ class HttpClient implements HttpClientInterface
      * An array of options for feed the client instance
      */
     protected $options = array(
-      'url'         =>  '',
-      'user_agent'  =>  'php-api (https://github.com/ner0tic/php-api-core)',
-      'http_port'   =>  443,
-      'auth_method' =>  null,
-      'timeout'     =>  10,
-      'api_limit'   =>  5000,
-      'token'       =>  null,
-      'certificate' =>  false
-//      , __DIR__.'/Certificates/CAfile.pem' 
+        'protocol'      =>  'https',
+        'api_url'       =>  '',
+        'url'           =>  ':protocol://:api_url/:path',
+        'user_agent'    =>  'php-api (https://github.com/ner0tic/php-api-core)',
+        'http_port'     =>  443,
+        'auth_method'   =>  null,
+        'timeout'       =>  10,
+        'api_limit'     =>  5000,
+        'token'         =>  null,
+        'certificate'   =>  false # __DIR__.'/Certificates/CAfile.pem' 
     ); 
 
     /**
@@ -70,6 +71,52 @@ class HttpClient implements HttpClientInterface
         $this->options = array_merge( $this->options, $options );
         $this->browser = $browser ?: new Browser( new Curl() );
 
+        if( $options[ 'login' ] ) 
+        {
+            switch( $options[ 'auth_method' ] ) 
+            {
+                case Client::AUTH_HTTP_PASSWORD:
+                    $this->browser->getClient()->setOption( CURLOPT_USERPWD, $options[ 'login '] . ':' . $options[ 'secret' ] );
+                    break;
+                case Client::AUTH_HTTP_TOKEN:
+                    $this->browser->getClient()->setOption( CURLOPT_USERPWD, $options[ 'login' ] . '/token:' . $options[ 'secret' ] );
+                    break;
+                case Client::AUTH_URL_TOKEN:
+                default:
+                    $parameters = array_merge(
+                            array(
+                                'login' => $options[ 'login' ],
+                                'token' => $options[ 'secret' ]
+                            ), 
+                            $parameters
+                    );
+                    break;
+            }
+        }
+
+        if( !empty( $parameters ) ) 
+        {
+            $queryString = utf8_encode( http_build_query( $parameters, '', '&' ) );
+
+            if( 'GET' === $httpMethod ) 
+            {
+                $url .= '?' . $queryString;
+            } 
+            else 
+            {
+                $this->browser->getClient()->setOption( CURLOPT_POST, true );
+                $this->browser->getClient()->setOption( CURLOPT_POSTFIELDS, $queryString );
+            }
+        }
+        
+        $this->browser->getClient()->setOption( CURLOPT_URL, $url );
+        $this->browser->getClient()->setOption( CURLOPT_PORT, $options[ 'http_port' ]);
+        $this->browser->getClient()->setOption( CURLOPT_USERAGENT, $options[ 'user_agent' ]);
+        $this->browser->getClient()->setOption( CURLOPT_FOLLOWLOCATION, true);
+        $this->browser->getClient()->setOption( CURLOPT_RETURNTRANSFER, true);
+        $this->browser->getClient()->setOption( CURLOPT_SSL_VERIFYPEER, false);
+        $this->browser->getClient()->setOption( CURLOPT_TIMEOUT, $options[ 'timeout' ]);
+        
         $this->browser->getClient()->setTimeout( $this->options['timeout'] );
         $this->browser->getClient()->setVerifyPeer( true ); 
         $this->browser->getClient()->setOption( CURLOPT_SSL_VERIFYHOST, 2 );
@@ -120,18 +167,7 @@ class HttpClient implements HttpClientInterface
      * @return array 
      */
     public function get( $path, array $parameters = array(), array $options = array() ) 
-    {
-        if( in_array( 'access_token', $options ) )
-        {
-            $parameters[ 'access_token' ] = $options[ 'access_token' ];
-            unset( $options[ 'access_token' ] );
-        }
-        elseif( in_array( 'auth_token', $options ) )
-        {
-            $parameters[ 'auth_token' ] = $options[ 'auth_token' ];
-            unset( $options[ 'auth_token' ] );
-        }
-        
+    {      
         if( 0 < count( $parameters ) )
         {
             $path .= ( false === strpos( $path, '?' ) ? '?':'&' ) . http_build_query( $parameters, '', '&' );
@@ -163,7 +199,10 @@ class HttpClient implements HttpClientInterface
     private function request( $path, array $params = array(), $httpMethod= 'GET', $options = array() ) 
     {
         $options = array_merge( $this->options, $options );
-        $url = strtr( $options[ 'url' ], array( ':path' => trim( $path, '/' ) ) );
+        $url = strtr( $options[ 'url' ], array( 
+            ':path'     =>  trim( $path, '/' ),
+            ':protocol' =>  $options[ 'protocol' ],
+        ) );
         
         $this->lastResponse = $this->doRequest( $url, $params, $httpMethod, $options );
 
@@ -178,7 +217,7 @@ class HttpClient implements HttpClientInterface
      * @param array $options
      * @return array
      */
-    private function doRequest( $path, array $params = array(), $httpMethod = 'GET', $options = array() ) 
+    public function doRequest( $path, array $params = array(), $httpMethod = 'GET', $options = array() ) 
     {
         $response = $this->browser->call( $path, $httpMethod, $this->headers, json_encode( $params ) );
         $this->checkApiLimit( $response );
