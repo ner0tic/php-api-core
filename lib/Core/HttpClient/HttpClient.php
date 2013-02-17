@@ -72,22 +72,22 @@ class HttpClient implements HttpClientInterface
         $this->options = array_merge( $this->options, $options );
         $this->browser = $browser ?: new Browser( new Curl() );
 
-        if( $options[ 'login' ] ) 
+        if( $this->options[ 'login' ] ) 
         {
-            switch( $options[ 'auth_method' ] ) 
+            switch( $this->options[ 'auth_method' ] ) 
             {
                 case Client::AUTH_HTTP_PASSWORD:
-                    $this->browser->getClient()->setOption( CURLOPT_USERPWD, $options[ 'login '] . ':' . $options[ 'secret' ] );
+                    $this->browser->getClient()->setOption( CURLOPT_USERPWD, $this->options[ 'login '] . ':' . $this->options[ 'secret' ] );
                     break;
                 case Client::AUTH_HTTP_TOKEN:
-                    $this->browser->getClient()->setOption( CURLOPT_USERPWD, $options[ 'login' ] . '/token:' . $options[ 'secret' ] );
+                    $this->browser->getClient()->setOption( CURLOPT_USERPWD, $this->options[ 'login' ] . '/token:' . $this->options[ 'secret' ] );
                     break;
                 case Client::AUTH_URL_TOKEN:
                 default:
                     $parameters = array_merge(
                             array(
-                                'login' => $options[ 'login' ],
-                                'token' => $options[ 'secret' ]
+                                'login' => $this->options[ 'login' ],
+                                'token' => $this->options[ 'secret' ]
                             ), 
                             $parameters
                     );
@@ -111,20 +111,20 @@ class HttpClient implements HttpClientInterface
         }
         
         $this->browser->getClient()->setOption( CURLOPT_URL, $url );
-        $this->browser->getClient()->setOption( CURLOPT_PORT, $options[ 'http_port' ]);
-        $this->browser->getClient()->setOption( CURLOPT_USERAGENT, $options[ 'user_agent' ]);
+        $this->browser->getClient()->setOption( CURLOPT_PORT, $this->options[ 'http_port' ]);
+        $this->browser->getClient()->setOption( CURLOPT_USERAGENT, $this->options[ 'user_agent' ]);
         $this->browser->getClient()->setOption( CURLOPT_FOLLOWLOCATION, true);
         $this->browser->getClient()->setOption( CURLOPT_RETURNTRANSFER, true);
         $this->browser->getClient()->setOption( CURLOPT_SSL_VERIFYPEER, false);
-        $this->browser->getClient()->setOption( CURLOPT_TIMEOUT, $options[ 'timeout' ]);
+        $this->browser->getClient()->setOption( CURLOPT_TIMEOUT, $this->options[ 'timeout' ]);
         
         $this->browser->getClient()->setTimeout( $this->options['timeout'] );
         $this->browser->getClient()->setVerifyPeer( true ); 
         $this->browser->getClient()->setOption( CURLOPT_SSL_VERIFYHOST, 2 );
 
-        if( isset( $options[ 'certificate' ] ) && file_exists( $options[ 'certificate' ] ) )
+        if( isset( $this->options[ 'certificate' ] ) && file_exists( $this->options[ 'certificate' ] ) )
         {
-            $this->browser->getClient()->setOption( CURLOPT_CAINFO, $option[ 'certificate' ] );
+            $this->browser->getClient()->setOption( CURLOPT_CAINFO, $this->option[ 'certificate' ] );
         }
     }
 
