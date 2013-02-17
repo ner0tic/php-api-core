@@ -29,6 +29,7 @@ class HttpClient implements HttpClientInterface
         'auth_method'   =>  null,
         'timeout'       =>  10,
         'api_limit'     =>  5000,
+        'login'         =>  null,
         'token'         =>  null,
         'certificate'   =>  false # __DIR__.'/Certificates/CAfile.pem' 
     ); 
