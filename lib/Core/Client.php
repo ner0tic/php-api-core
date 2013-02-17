@@ -12,25 +12,12 @@ use Core\Api\ApiInterface,
  */
  class Client
 {
-    /**
-     
-     * @var string $_authUrlToken
-     */
     const AUTH_URL_TOKEN        = 'url_token';
     
-    /**
-     * @var string  $_authUrlClientId
-     */
     const AUTH_URL_CLIENT_ID    = 'url_client_id';
     
-    /**
-     * @var string $_authHttpPassword
-     */
     const AUTH_HTTP_PASSWORD    = 'http_password';
     
-    /**
-     * @var string $_authHttpToken
-     */
     const AUTH_HTTP_TOKEN       = 'http_token';
 
     /**
@@ -52,6 +39,14 @@ use Core\Api\ApiInterface,
      * @var array $headers 
      */
     private $_headers           = array();
+    
+    protected $authUrlClientId;
+    
+    protected $authHttpToken;
+    
+    protected $authHttpPassword;
+    
+    protected $authUrlToken;
 
     /**
      * 
@@ -72,7 +67,7 @@ use Core\Api\ApiInterface,
     {
         $this->getHttpClient()->setOption( 'auth_method', $method );
 
-        if( $method === $this->_authHttpPassword || $method === $this->_authUrlClientId ) 
+        if( $method === AUTH_HTTP_PASWORD || $method === AUTH_URL_CLIENT_ID ) 
         {
             $this->getHttpClient()
                  ->setOption( 'login', $login )
@@ -179,7 +174,7 @@ use Core\Api\ApiInterface,
      */
     public function setAuthHttpPassword( $ahp )
     {
-        $this->_authHttpPassword = $ahp;
+        $this->authHttpPassword = $ahp;
     }
     
     /**
@@ -188,7 +183,7 @@ use Core\Api\ApiInterface,
      */
     public function getAuthHttpPassword() 
     {
-        return $this->_authHttpPassword;
+        return $this->authHttpPassword;
     }
     
     /**
@@ -197,7 +192,7 @@ use Core\Api\ApiInterface,
      */
     public function setAuthHttpToken( $aht ) 
     {
-        $this->_authHttpToken = $aht;
+        $this->authHttpToken = $aht;
     }
     
     /**
@@ -206,7 +201,7 @@ use Core\Api\ApiInterface,
      */
     public function getAuthHttpToken() 
     {
-        return $this->_authHttpToken;
+        return $this->authHttpToken;
     }
     
     /**
@@ -215,12 +210,12 @@ use Core\Api\ApiInterface,
      */
     public function setAuthClientId( $aci ) 
     {
-        $this->_authUrlClientId = $aci;
+        $this->authUrlClientId = $aci;
     }
     
     public function getAuthClientId() 
     {
-        return $this->_authUrlClientId;
+        return $this->authUrlClientId;
     }
     
     /**
@@ -229,7 +224,7 @@ use Core\Api\ApiInterface,
      */
     public function setAuthUrlToken( $aut ) 
     {
-        $this->_authUrlToken = $aut;
+        $this->authUrlToken = $aut;
     }
     
     public function setOption( $name, $value )
