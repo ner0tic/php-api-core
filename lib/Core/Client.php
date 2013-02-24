@@ -74,7 +74,7 @@ use Core\Api\ApiInterface,
                  ->setOption( 'password', $secret );
         } 
         else 
-            $this->getHttpClient()->setOption( 'access_token', $secret );
+            $this->getHttpClient()->setOption( 'token', $secret );
     }
     
     public function deauthenticate()
