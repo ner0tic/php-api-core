@@ -123,10 +123,10 @@ class HttpClient implements HttpClientInterface
      */
     public function get( $path, array $parameters = array(), array $options = array() ) 
     {      
-        if( 0 < count( $parameters ) )
-        {
-            $path .= ( false === strpos( $path, '?' ) ? '?':'&' ) . http_build_query( $parameters, '', '&' );
-        }
+//        if( 0 < count( $parameters ) )
+//        {
+//            $path .= ( false === strpos( $path, '?' ) ? '?':'&' ) . http_build_query( $parameters, '', '&' );
+//        }
         
         return $this->request( $path, $parameters, 'GET', $options );
     }
@@ -172,7 +172,7 @@ class HttpClient implements HttpClientInterface
      * @param array $options
      * @return array
      */
-    public function doRequest( $url, array $params = array(), $httpMethod = 'GET', array $options = array() ) 
+    public function doRequest( $url, array $parameters = array(), $httpMethod = 'GET', array $options = array() ) 
     {
         if( $this->options[ 'login' ] ) 
         {
@@ -221,7 +221,7 @@ class HttpClient implements HttpClientInterface
         $this->browser->getClient()->setOption( CURLOPT_TIMEOUT, $this->options[ 'timeout' ]);
         
         
-        $response = $this->browser->call( $url, $httpMethod, $this->headers, json_encode( $params ) );
+        $response = $this->browser->call( $url, $httpMethod, $this->headers, json_encode( $parameters ) );
         $this->checkApiLimit( $response );
 
         return array(
