@@ -71,7 +71,7 @@ use Core\Api\ApiInterface,
         {
             $this->getHttpClient()
                  ->setOption( 'login', $login )
-                 ->setOption( 'password', $secret );
+                 ->setOption( 'secret', $secret );
         } 
         else 
             $this->getHttpClient()->setOption( 'token', $secret );
@@ -166,65 +166,6 @@ use Core\Api\ApiInterface,
     public function setHeaders( $header ) 
     {
         $this->_headers = $headers;
-    }
-    
-    /**
-     * Sets Http Password
-     * @param string $ahp Http password
-     */
-    public function setAuthHttpPassword( $ahp )
-    {
-        $this->authHttpPassword = $ahp;
-    }
-    
-    /**
-     * Gets the Http Password
-     * @return string
-     */
-    public function getAuthHttpPassword() 
-    {
-        return $this->authHttpPassword;
-    }
-    
-    /**
-     * 
-     * @param string $aht Http token
-     */
-    public function setAuthHttpToken( $aht ) 
-    {
-        $this->authHttpToken = $aht;
-    }
-    
-    /**
-     * 
-     * @return string
-     */
-    public function getAuthHttpToken() 
-    {
-        return $this->authHttpToken;
-    }
-    
-    /**
-     * 
-     * @param string $aci Client Id
-     */
-    public function setAuthClientId( $aci ) 
-    {
-        $this->authUrlClientId = $aci;
-    }
-    
-    public function getAuthClientId() 
-    {
-        return $this->authUrlClientId;
-    }
-    
-    /**
-     * 
-     * @param string $aut URL token
-     */
-    public function setAuthUrlToken( $aut ) 
-    {
-        $this->authUrlToken = $aut;
     }
     
     public function setOption( $name, $value )
