@@ -13,9 +13,8 @@
         }        
     ],
     "require":      {
-        "php":  ">=5.3.0",
-        "ext-curl":           "*",
-        "kriswallsmith/buzz": "dev-master"
+        "php":  ">=5.4",
+        "guzzle/guzzle": "~3.1"
     },
     "require-dev":  {
     },

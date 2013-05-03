@@ -2,86 +2,47 @@
 namespace Core;
 
 use Core\Api\ApiInterface,
-    Core\HttpClient\HttpClientInterface,
-    Core\HttpClient\HttpClient,
+    Guzzle\Http\Client as Guzzle,
 
     \InvalidArgumentException as InvalidArgument;
 
 /**
- * class Client instance of HttpClient
+ * class Client
  */
  class Client
 {
-    const AUTH_URL_TOKEN        = 'url_token';
-    
-    const AUTH_URL_CLIENT_ID    = 'url_client_id';
-    
-    const AUTH_HTTP_PASSWORD    = 'http_password';
-    
-    const AUTH_HTTP_TOKEN       = 'http_token';
-
-    /**
-     *
-     * @var Core\HttpClient $httpClient 
-     */
-    protected $httpClient        = null;
-
     /**
      *
      * @var array apis
      * An array of the available endpoint apis to load.  
      * Think of it like a smarter lazy loader but not that smart...
      */
-    private $_apis              = array();
-
+    private $_apis              =   array();
+    
     /**
-     *
-     * @var array $headers 
+     * @var Guzzle\Http\Client $guzzleClient
      */
-    private $_headers           = array();
+    protected $guzzleClient     =   null;
+            
+    /**
+     * @var object $lastResponse
+     */
+    protected $lastResponse     =   null;
+            
+    /**
+     * @var array $options
+     */
+    protected $options          =   array();   
     
-    protected $authUrlClientId;
-    
-    protected $authHttpToken;
-    
-    protected $authHttpPassword;
-    
-    protected $authUrlToken;
-
     /**
      * 
      * @param Core\HttpClient\HttpClientInterface $httpClient
      */
-    public function __construct( HttpClientInterface $httpClient = null ) 
+    public function __construct() 
     {
-        $this->httpClient = $httpClient ?: new HttpClient();
+        $this->guzzleClient = new guzzleClient( 'http://api.example.com/' );
     }
       
-    /**
-     * Authenticate
-     * @param string $login login credentials
-     * @param string $secret client secret
-     * @param string $method call method
-     */
-    public function authenticate( $login, $secret = null, $method = null ) 
-    {
-        $this->getHttpClient()->setOption( 'auth_method', $method );
-
-        if( $method === self::AUTH_HTTP_PASSWORD || $method === self::AUTH_URL_CLIENT_ID ) 
-        {
-            $this->getHttpClient()
-                 ->setOption( 'login', $login )
-                 ->setOption( 'secret', $secret );
-        } 
-        else 
-            $this->getHttpClient()->setOption( 'token', $secret );
-    }
-    
-    public function deauthenticate()
-    {
-        $this->authenticate( null, null, null );
-    }
-
     /**
      * Get
      * @param string $path
@@ -91,7 +52,14 @@ use Core\Api\ApiInterface,
      */
     public function get( $path, array $parameters = array(), $requestOptions = array() ) 
     {
-        return $this->getHttpClient()->get( $path, $parameters, $requestOptions );
+        $requestOptions = array_merge( $this->options, $requestOptions );
+        $url = strtr( $requestOptions[ 'url' ], array(
+            ':path' =>  trim( $path, '/' )
+        ) );
+        
+        $this->lastResponse = $this->request( $url, $parameters, 'GET', $requestOptions ); 
+        
+        return $this->lastResponse[ 'response' ];
     }
 
     /**
@@ -103,26 +71,39 @@ use Core\Api\ApiInterface,
      */
     public function post( $path, array $parameters = array(), $requestOptions = array() ) 
     {
-      return $this->getHttpClient()->post( $path, $parameters, $requestOptions );
+      return false; 
     }
 
     /**
-     * GetHttpClient
-     * @return Core\HttpClient\HttpClient
+     * 
+     * @param string $url
+     * @param array $parameters
+     * @param string $method
+     * @param array $options
+     * @return object
      */
-    public function getHttpClient() 
+    public function request( $url, array $parameters = array(), $method = 'GET', $options = array() )
     {
-        return $this->httpClient;
+        if( !empty( $parameters ) )
+            $querystring = utf8_encode( http_build_query( $parameters, '', '&' ) );
+            
+        switch( $method )
+        {
+            case 'GET':
+            case 'get':
+            
+            case 'POST':
+            case 'post':
+            
+            case 'DELETE':
+            case 'delete':
+            
+            default:
+                return $this->guzzleClient->get( $url );
+                break;                
+        }        
     }
-
-    /**
-     * SetHttpClient
-     * @param Core\HttpClient\HttpClientInterface $httpClient
-     */
-    public function setHttpClient( HttpClientInterface $httpClient ) {
-        $this->httpClient = $httpClient;
-    }
-
+    
     /**
      * Api
      * @param string $name
@@ -143,43 +124,35 @@ use Core\Api\ApiInterface,
     }
 
     /**
-     * GetRateLimit
-     * @return type
+     * GetOption
+     * @param string $name
+     * @return string|integer|array
      */
-    public function getRateLimit() 
+    public function getOption( $name )
     {
-        return $this->get( 'rate_limit' );
+        return $this->options[ $name ];
     }
 
     /**
-     * ClearHeaders
+     * SetOption
+     * @param type $name
+     * @param type $value
+     * @return \Core\HttpClient\HttpClient
      */
-    public function clearHeaders() 
+    public function setOption( $name, $value ) 
     {
-        $this->setHeaders( array() );
-    }
+        $this->options[ $name ] = $value;
 
-    /**
-     * 
-     * @param type $headerSetHeader
-     */
-    public function setHeaders( $header ) 
-    {
-        $this->_headers = $headers;
-    }
-    
-    public function setOption( $name, $value )
-    {
-        return $this->httpClient->setOption( $name, $value );
+        return $this;
     }
     
     public function setUrl( $url )
     {
-        return $this->httpClient->setOption( 'url', $url );
+        return $this->setOption( 'url', $url );
     }
     
     public function getUrl()
     {
-        return $this->httpClient->getOption( 'url' );
+        return $this->getOption( 'url' );
     }
 }
