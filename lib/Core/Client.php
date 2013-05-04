@@ -50,14 +50,14 @@ use Core\Api\ApiInterface,
      * @param array $requestOptions
      * @return type
      */
-    public function get( $path, array $params = array(), $requestOptions = array() ) 
+    public function get( $path, array $params = array(), $requestOpts = array() ) 
     {
-        $requestOptions = array_merge( $this->options, $requestOptions );
-        $url = strtr( $requestOptions[ 'url' ], array(
+        $requestOptions = array_merge( $this->options, $requestOpts );
+        $url = strtr( $requestOpts[ 'url' ], array(
             ':path' =>  trim( $path, '/' )
         ) );
         
-        $this->lastResponse = $this->request( $url, $params, 'GET', $requestOptions ); 
+        $this->lastResponse = $this->request( $url, $params, 'GET', $requestOpts ); 
         
         return $this->lastResponse[ 'response' ];
     }
@@ -69,7 +69,7 @@ use Core\Api\ApiInterface,
      * @param array $requestOptions
      * @return type
      */
-    public function post( $path, array $params = array(), $requestOptions = array() ) 
+    public function post( $path, array $params = array(), $requestOpts = array() ) 
     {
       return false; 
     }
