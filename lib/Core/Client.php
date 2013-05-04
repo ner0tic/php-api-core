@@ -50,14 +50,14 @@ use Core\Api\ApiInterface,
      * @param array $requestOptions
      * @return type
      */
-    public function get( $path, array $parameters = array(), $requestOptions = array() ) 
+    public function get( $path, array $params = array(), $requestOptions = array() ) 
     {
         $requestOptions = array_merge( $this->options, $requestOptions );
         $url = strtr( $requestOptions[ 'url' ], array(
             ':path' =>  trim( $path, '/' )
         ) );
         
-        $this->lastResponse = $this->request( $url, $parameters, 'GET', $requestOptions ); 
+        $this->lastResponse = $this->request( $url, $params, 'GET', $requestOptions ); 
         
         return $this->lastResponse[ 'response' ];
     }
@@ -69,7 +69,7 @@ use Core\Api\ApiInterface,
      * @param array $requestOptions
      * @return type
      */
-    public function post( $path, array $parameters = array(), $requestOptions = array() ) 
+    public function post( $path, array $params = array(), $requestOptions = array() ) 
     {
       return false; 
     }
@@ -91,17 +91,20 @@ use Core\Api\ApiInterface,
         {
             case 'GET':
             case 'get':
-            
+                $url .= '?' . $queryString;
+                break;
             case 'POST':
             case 'post':
-            
+                
             case 'DELETE':
             case 'delete':
             
             default:
-                return $this->guzzleClient->get( $url );
+                throw new Exception( 'Invalid method type.' );
                 break;                
-        }        
+        }
+        
+        
     }
     
     /**
