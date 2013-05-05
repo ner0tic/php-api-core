@@ -87,16 +87,13 @@ use Core\Api\ApiInterface,
         if( !empty( $parameters ) )
             $querystring = utf8_encode( http_build_query( $parameters, '', '&' ) );
             
-        switch( $method )
+        switch(strtolower( $method ) )
         {
-            case 'GET':
             case 'get':
                 $url .= '?' . $queryString;
                 break;
-            case 'POST':
             case 'post':
                 
-            case 'DELETE':
             case 'delete':
             
             default:
@@ -104,7 +101,7 @@ use Core\Api\ApiInterface,
                 break;                
         }
         
-        
+        return $this->client->get( $url );
     }
     
     /**
