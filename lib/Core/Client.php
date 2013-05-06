@@ -52,7 +52,7 @@ use Core\Api\ApiInterface,
      */
     public function get( $path, array $params = array(), $requestOpts = array() ) 
     {
-        $requestOptions = array_merge( $this->options, $requestOpts );
+        $requestOpts = array_merge( $this->options, $requestOpts );
         $url = strtr( $requestOpts[ 'url' ], array(
             ':path' =>  trim( $path, '/' )
         ) );
