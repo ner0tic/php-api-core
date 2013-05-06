@@ -101,7 +101,7 @@ use Core\Api\ApiInterface,
                 break;                
         }
         
-        return $this->client->get( $url );
+        return $this->guzzleClient->get( $url );
     }
     
     /**
