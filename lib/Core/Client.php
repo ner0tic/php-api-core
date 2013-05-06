@@ -86,6 +86,7 @@ use Core\Api\ApiInterface,
     {
         if( !empty( $parameters ) )
             $querystring = utf8_encode( http_build_query( $parameters, '', '&' ) );
+        else    $querystring = '';
             
         switch(strtolower( $method ) )
         {
