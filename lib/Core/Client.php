@@ -59,7 +59,7 @@ use Core\Api\ApiInterface,
         
         $this->lastResponse = $this->request( $url, $params, 'GET', $requestOpts ); 
         
-        return $this->lastResponse[ 'response' ];
+        return $this->lastResponse->json();
     }
 
     /**
@@ -101,7 +101,7 @@ use Core\Api\ApiInterface,
                 break;                
         }
         
-        return $this->guzzleClient->get( $url );
+        return $this->guzzleClient->get( $url )->send();
     }
     
     /**
