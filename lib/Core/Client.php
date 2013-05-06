@@ -40,7 +40,7 @@ use Core\Api\ApiInterface,
      */
     public function __construct() 
     {
-        $this->guzzleClient = new guzzleClient( 'http://api.example.com/' );
+        $this->guzzleClient = new Guzzle( 'http://api.example.com/' );
     }
       
     /**
