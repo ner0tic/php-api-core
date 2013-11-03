@@ -1,5 +1,5 @@
 <?php
-namespace Core\HttpClient;
+namespace Ner0tic\ApiEngine\HttpClient;
 
 interface HttpClientInterface 
 {
@@ -9,7 +9,7 @@ interface HttpClientInterface
    * @param array $parameters
    * @param array $options
    */
-    public function get( $path, array $parameters = array(), array $options = array() );
+    public function get($path, array $parameters = array(), array $options = array());
 
     /**
    * Post
@@ -17,18 +17,18 @@ interface HttpClientInterface
    * @param array $parameters
    * @param array $options
    */
-    public function post( $path, array $parameters = array(), array $options = array() );
+    public function post($path, array $parameters = array(), array $options = array());
 
     /**
    * SetOption
    * @param string $name
    * @param string $value
    */
-    public function setOption( $name, $value );
+    public function setOption($name, $value);
 
     /**
    * SetHeaders
    * @param array $headers
    */
-    public function setHeaders( array $headers );
+    public function setHeaders(array $headers);
 }

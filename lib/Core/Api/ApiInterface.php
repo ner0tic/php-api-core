@@ -1,6 +1,6 @@
 <?php
 
-  namespace Core\Api;
+  namespace Ner0tic\ApiEngine\Api;
 
   interface ApiInterface 
   {

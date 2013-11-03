@@ -1,12 +1,11 @@
 <?php
+namespace Ner0tic\ApiEngine\Exception;
 
-  namespace Core\Exception;
+use \RuntimeException;
 
-  use \RuntimeException;
-
-  class ApiLimitExceedException extends RuntimeException {
+class ApiLimitExceedException extends RuntimeException 
+{
     /**
-     * 
      * @param float $limit
      */
     public function __construct($limit) {

@@ -1,9 +1,8 @@
 <?php
-
-  namespace Core\Exception;
+  namespace Ner0tic\ApiEngine\Exception;
   
   use \InvalidArgumentException;
   
-  class InvalidArgumentException extends InvalidArgumentException {
-
+  class InvalidArgumentException extends InvalidArgumentException 
+  {
   }

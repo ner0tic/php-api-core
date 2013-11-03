@@ -1,5 +1,5 @@
 <?php
-namespace 
+namespace Ner0tic\ApiEngine\HttpClient;
 
 class Github_HttpClient_Curl extends Github_HttpClient
 {
@@ -17,7 +17,7 @@ class Github_HttpClient_Curl extends Github_HttpClient
     {
         $curlOptions = array();
 
-        if ($options['login']) {
+        if ($options['login'])  {
             switch ($options['auth_method']) {
                 case Github_Client::AUTH_HTTP_PASSWORD:
                     $curlOptions += array(
