@@ -6,7 +6,7 @@ ORM agnostic php library to access REST apis
 Usage
 =============
 ```php
-use Core\Api\AbstractApi;
+use Ner0tic\ApiEngine\Api\AbstractApi;
 
 $api = new AbstractApi();
 $client = $api->getClient();
@@ -25,7 +25,7 @@ $result = $api->get($endpoint, $parameters, $request_options);
 
 Working example:
 ```php
-use Core\Api\AbstractApi();
+use Ner0tic\ApiEngine\Api\AbstractApi();
 
 $api = new AbstractApi();
 $client = $api->getClient();
