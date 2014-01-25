@@ -19,6 +19,10 @@
     "require-dev":  {
     },
     "suggest":      {
+        "ner0tic/foursquare-api": "Needed to access the foursquare api",
+        "ner0tic/php-geopoint-api": "Needed to access geolocation api",
+        "ner0tic/php-instagram-api": "Needed to access the instagram api",
+        "ner0tic/php-minteye-api": "Needed to access the minteye api"
     },
     "autoload":     {
         "psr-0": { "Core\\": "lib/" }

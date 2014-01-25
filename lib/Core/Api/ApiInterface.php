@@ -1,10 +1,9 @@
 <?php
+namespace Core\Api;
 
-  namespace Core\Api;
-
-  interface ApiInterface 
-  {
-    public function get( $path, $params, $requestOpts );
+interface ApiInterface
+{
+    public function get($path, $params, $requestOpts);
     
-    public function post( $path, $params, $requestOpts );
-  }
+    public function post($path, $params, $requestOpts);
+}

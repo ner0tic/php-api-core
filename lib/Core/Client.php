@@ -1,15 +1,15 @@
 <?php
 namespace Core;
 
-use Core\Api\ApiInterface,
-    Guzzle\Http\Client as Guzzle,
+use Core\Api\ApiInterface;
+use Guzzle\Http\Client as Guzzle;
 
-    \InvalidArgumentException as InvalidArgument;
+use \InvalidArgumentException as InvalidArgument;
 
 /**
  * class Client
  */
- class Client
+class Client
 {
     /**
      *
@@ -32,15 +32,15 @@ use Core\Api\ApiInterface,
     /**
      * @var array $options
      */
-    protected $options          =   array();   
+    protected $options          =   array();
     
     /**
      * 
      * @param Core\HttpClient\HttpClientInterface $httpClient
      */
-    public function __construct() 
+    public function __construct()
     {
-        $this->guzzleClient = new Guzzle( 'http://api.example.com/' );
+        $this->guzzleClient = new Guzzle('http://api.example.com/');
     }
       
     /**
@@ -50,14 +50,15 @@ use Core\Api\ApiInterface,
      * @param array $requestOptions
      * @return type
      */
-    public function get( $path, array $params = array(), $requestOpts = array() ) 
+    public function get($path, array $params = array(), $requestOpts = array())
     {
-        $requestOpts = array_merge( $this->options, $requestOpts );
-        $url = strtr( $requestOpts[ 'url' ], array(
-            ':path' =>  trim( $path, '/' )
-        ) );
+        $requestOpts = array_merge($this->options, $requestOpts);
+        $url = strtr(
+            $requestOpts['url'],
+            array(':path' =>  trim($path, '/'))
+        );
         
-        $this->lastResponse = $this->request( $url, $params, 'GET', $requestOpts ); 
+        $this->lastResponse = $this->request($url, $params, 'GET', $requestOpts);
         
         return $this->lastResponse->json();
     }
@@ -69,9 +70,9 @@ use Core\Api\ApiInterface,
      * @param array $requestOptions
      * @return type
      */
-    public function post( $path, array $params = array(), $requestOpts = array() ) 
+    public function post($path, array $params = array(), $requestOpts = array())
     {
-      return false; 
+        return false;
     }
 
     /**
@@ -82,26 +83,25 @@ use Core\Api\ApiInterface,
      * @param array $options
      * @return object
      */
-    public function request( $url, array $parameters = array(), $method = 'GET', $options = array() )
+    public function request($url, array $parameters = array(), $method = 'GET', $options = array())
     {
-        if( !empty( $parameters ) )
-            $querystring = utf8_encode( http_build_query( $parameters, '', '&' ) );
+        if (!empty($parameters)) {
+            $querystring = utf8_encode(http_build_query($parameters, '', '&'));
+        }
         
-        switch(strtolower( $method ) )
+        switch(strtolower($method))
         {
             case 'get':
                 $url .= '?' . $querystring;
                 break;
             case 'post':
-                
             case 'delete':
-            
             default:
-                throw new Exception( 'Invalid method type.' );
-                break;                
+                throw new Exception('Invalid method type.');
+                break;
         }
         
-        return $this->guzzleClient->get( $url )->send();
+        return $this->guzzleClient->get($url)->send();
     }
     
     /**
@@ -110,17 +110,18 @@ use Core\Api\ApiInterface,
      * @return api 
      * @throws InvalidArgument
      */
-    public function api( $name ) {
-        if( !isset( $this->_apis[ $name ] ) ) 
-        {
+    public function api($name)
+    {
+        if (!isset($this->_apis[$name])) {
             $ns = "Api\$name";
-            if( !$api = new $ns() )
+            if (!$api = new $ns()) {
                 throw new InvalidArgument();
+            }
 
-            $this->_apis[ $name ] = $api;
+            $this->_apis[$name] = $api;
         }
         
-        return $this->_apis[ $name ];
+        return $this->_apis[$name];
     }
 
     /**
@@ -128,9 +129,9 @@ use Core\Api\ApiInterface,
      * @param string $name
      * @return string|integer|array
      */
-    public function getOption( $name )
+    public function getOption($name)
     {
-        return $this->options[ $name ];
+        return $this->options[$name];
     }
 
     /**
@@ -139,20 +140,20 @@ use Core\Api\ApiInterface,
      * @param type $value
      * @return \Core\HttpClient\HttpClient
      */
-    public function setOption( $name, $value ) 
+    public function setOption($name, $value)
     {
-        $this->options[ $name ] = $value;
+        $this->options[$name] = $value;
 
         return $this;
     }
     
-    public function setUrl( $url )
+    public function setUrl($url)
     {
-        return $this->setOption( 'url', $url );
+        return $this->setOption('url', $url);
     }
     
     public function getUrl()
     {
-        return $this->getOption( 'url' );
+        return $this->getOption('url');
     }
 }

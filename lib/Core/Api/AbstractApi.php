@@ -3,7 +3,7 @@ namespace Core\Api;
   
 use Core\Client;
 
-abstract class AbstractApi implements ApiInterface 
+abstract class AbstractApi implements ApiInterface
 {
     /**
      *
@@ -15,7 +15,7 @@ abstract class AbstractApi implements ApiInterface
      * 
      * @param Core\Client $client
      */
-    public function __construct( Client $client = null ) 
+    public function __construct(Client $client = null)
     {
         $this->client = $client instanceof Client ? $client : new Client();
     }
@@ -27,9 +27,9 @@ abstract class AbstractApi implements ApiInterface
      * @param array $requstOpts
      * @return type
      */
-    public function get( $path, $parameters = array(), $requestOpts = array() ) 
+    public function get($path, $parameters = array(), $requestOpts = array())
     {
-        return $this->client->get( $path, $parameters, $requestOpts );
+        return $this->client->get($path, $parameters, $requestOpts);
     }
 
     /**
@@ -39,13 +39,13 @@ abstract class AbstractApi implements ApiInterface
      * @param array $requestOpts
      * @return type
      */
-    public function post( $path, $parameters = array(), $requestOpts = array() ) 
+    public function post($path, $parameters = array(), $requestOpts = array())
     {
-        return $this->client->post( $path, $parameters, $requestOpts );
+        return $this->client->post($path, $parameters, $requestOpts);
     }
 
-    public function setOption( $name, $value )
+    public function setOption($name, $value)
     {
-        return $this->client->setOption( $name, $value );
+        return $this->client->setOption($name, $value);
     }
 }
